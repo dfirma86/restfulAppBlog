@@ -18,16 +18,6 @@ const blogSchema = new mongoose.Schema({
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
-// title
-// image url
-// body
-// created
-
-// Blog.create({
-//   title: 'test blog',
-//   image: 'https://www.what-dog.net/Images/faces2/scroll001.jpg',
-//   body: 'this is a test'
-// })
 
 // RESTFUL ROUTES
 app.get('/', (req, res) => {
@@ -57,6 +47,17 @@ app.post('/blogs', (req, res) => {
       res.render('new')
     } else {
       res.redirect('/blogs')
+    }
+  })
+})
+
+// SHOW ROUTE
+app.get('/blogs/:id', (req, res) => {
+  Blog.findById(req.params.id, (err, foundBlog) => {
+    if (err) {
+      res.redirect('/blogs')
+    } else {
+      res.render('show', { blog: foundBlog })
     }
   })
 })
